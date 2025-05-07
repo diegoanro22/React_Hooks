@@ -1,11 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>UseMemo</title>
+
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <!-- ReactDOM -->
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel para procesar JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
 </head>
+
 <body>
-    
+    <div id="root"></div>
+    <!-- Codigo JSX -->
+    <script type="text/babel">
+        function UserSearch() {
+            const [search, setSearch] = React.useState('');
+            const [users, setUsers] = React.useState([
+                { name: "Diego", description: "Me gusta tocar la guitarra" },
+                { name: "BoJack Horseman", description: "Actor de televisión en decadencia, cínico y egocéntrico, famoso por la serie 'Horsin' Around'." },
+                { name: "Todd Chavez", description: "Amigo despreocupado y excéntrico de BoJack; siempre tiene ideas raras y emprendimientos locos." },
+                { name: "Diane Nguyen", description: "Escritora inteligente y feminista; lucha con su identidad, ética y relaciones personales." },
+                { name: "Mr. Peanutbutter", description: "Perro optimista y alegre; actor y exesposo de Diane, con actitud siempre positiva." },
+                { name: "Princess Carolyn", description: "Gata rosa y agente de BoJack; muy trabajadora y multitasker, busca equilibrio entre trabajo y vida personal." },
+                { name: "Sarah Lynn", description: "Exestrella infantil de 'Horsin' Around', se convirtió en cantante pop y sufrió adicciones y crisis personales." },
+                { name: "Wanda Pierce", description: "Productora de televisión; tuvo una relación con BoJack tras despertar de un coma de 30 años." },
+                { name: "Hollyhock", description: "Medio hermana de BoJack; joven que busca identidad propia y quiere conocer a su familia biológica." },
+                { name: "Herb Kazzaz", description: "Creador de 'Horsin' Around' y viejo amigo de BoJack; su relación terminó mal por traición profesional." },
+                { name: "Vincent Adultman", description: "Tres niños en una gabardina pretendiendo ser un adulto; extrañamente pasa desapercibido." }
+            ]);
+
+            const [name, setName] = React.useState('');
+            const [description, setDescription] = React.useState('');
+
+            const saveUser = () => {
+                setUsers([...users, { name, description }]);
+                setName('');
+                setDescription('');
+            };
+
+            const filteredUsers = React.useMemo(() => {
+                return users.filter(user =>
+                    user.name.toLowerCase().includes(search.toLowerCase()) ||
+                    user.description.toLowerCase().includes(search.toLowerCase()));
+            }, [users, search]);
+
+
+            return (
+                <div>
+                    <input type="text" value={search} placeholder="Buscar..."
+                        onChange={(e) => setSearch(e.target.value)} />
+
+                    <input type="text" value={name} placeholder="Nombre..."
+                        onChange={(e) => setName(e.target.value)} />
+
+                    <input type="text" value={description} placeholder="Descripcion..."
+                        onChange={(e) => setDescription(e.target.value)} />
+
+                    <button onClick={saveUser}>Agregar</button>
+
+                    <ul>
+                        {filteredUsers.map((user, index) => (
+                            <li key={index}>
+                                <strong>{user.name}</strong>: {user.description}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            );
+
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<UserSearch />);
+
+    </script>
+
 </body>
+
 </html>
