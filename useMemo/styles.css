@@ -1,0 +1,81 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+div {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+div:hover {
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+}
+
+input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #3182ce;
+    outline: none;
+}
+
+button {
+    padding: 12px 20px;
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 0; /* Ajuste el margen para dar espacio arriba y abajo */
+    transition: background-color 0.3s;
+    width: auto; /* Asegura que el botón tenga un tamaño adecuado */
+}
+
+button:hover {
+    background-color: #2b6cb0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Fira Code', monospace;
+    color: #2d3748;
+}
+
+li {
+    background-color: #f7fafc;
+    margin-bottom: 10px;
+    padding: 12px 16px;
+    border-left: 5px solid #3182ce;
+    border-radius: 8px;
+}
+
+strong {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #1a202c;
+}
