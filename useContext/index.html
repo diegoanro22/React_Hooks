@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UseContext</title>
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="./styles.css">
+
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <!-- ReactDOM -->
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel para procesar JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div id="root"></div>
+    <!-- Codigo JSX -->
+    <script type="text/babel">
+
+        const ThemeContext = React.createContext();
+
+        const ThemeContextProvider = ({ children }) => {
+            const [theme, setTheme] = React.useState('light');
+
+            const ThemeToggle = () => {
+                setTheme(prev => prev === 'light' ? 'dark' : 'light');
+            };
+
+            return (
+                <ThemeContext.Provider value={{ theme, ThemeToggle }}>
+                    {children}
+                </ThemeContext.Provider>
+            );
+        };
+
+        const ThemeButton = () => {
+            const { theme, ThemeToggle } = React.useContext(ThemeContext);
+            return (
+                <button className={theme} onClick={ThemeToggle}>
+                    Cambiar tema a {theme === 'light' ? 'oscuro' : 'claro'}
+                </button>
+            );
+        };
+
+        const ThemeDisplay = () => {
+            const { theme } = React.useContext(ThemeContext);
+
+            return (
+                <div className={`theme-card ${theme}`}>
+                    <p>El tema actual es: <strong>{theme}</strong></p>
+                </div>
+            );
+        };
+
+
+
+        function App() {
+            return (
+                <ThemeContextProvider>
+                    <div className="container">
+                        <h1>UseContext</h1>
+                        <ThemeButton />
+                        <ThemeDisplay />
+                    </div>
+                </ThemeContextProvider>
+            );
+        }
+
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+
+
+
+    </script>
+
+</body>
+
+</html>
