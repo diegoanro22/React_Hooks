@@ -1,11 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UseCallback</title>
+
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <!-- ReactDOM -->
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel para procesar JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
 </head>
+
 <body>
-    
+    <div id="root"></div>
+    <!-- Codigo JSX -->
+    <script type="text/babel">
+
+        const ButtonNormal = ({ onClick, children }) => {
+            console.log('Renderizando botón normal...');
+            return <button onClick={onClick}>{children}</button>;
+        };
+
+        const ButtonOptimizado = React.memo(({ onClick, children }) => {
+            console.log('Renderizando botón memoizado...');
+            return <button onClick={onClick}>{children}</button>;
+        });
+
+
+        function Cart() {
+            const [randomNumber, setRandomNumber] = React.useState(0);
+            const [counter, setCounter] = React.useState(0);
+
+            const generateRandomNumber = React.useCallback(() => {
+                console.log('Generando número aleatorio...');
+                setRandomNumber(Math.floor(Math.random() * 100) + 1);
+            }, []);
+
+            const addCounter = () => {
+                console.log('Sumando 1 al contador...');
+                setCounter(prev => prev + 1);
+            };
+
+            return (
+                <div className="container">
+                    <h2>Número aleatorio: {randomNumber}</h2>
+                    <h2>Contador: {counter}</h2>
+                    <ButtonNormal onClick={addCounter}>Sumar contador</ButtonNormal>
+                    <ButtonOptimizado onClick={generateRandomNumber}>Generar número aleatorio</ButtonOptimizado>
+                </div>
+            );
+
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Cart />);
+
+    </script>
+
 </body>
+
 </html>
