@@ -30,6 +30,11 @@
         const ThemeContextProvider = ({ children }) => {
             const [theme, setTheme] = React.useState('light');
 
+            React.useEffect(() => {
+                // Cambiar la clase del body según el tema actual
+                document.body.className = theme;
+            }, [theme]); // Ejecutar cada vez que el tema cambie
+
             const ThemeToggle = () => {
                 setTheme(prev => prev === 'light' ? 'dark' : 'light');
             };
@@ -68,6 +73,7 @@
                     <div className="container">
                         <h1>UseContext</h1>
                         <ThemeButton />
+                        <br/>
                         <ThemeDisplay />
                     </div>
                 </ThemeContextProvider>
